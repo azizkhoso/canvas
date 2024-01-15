@@ -108,8 +108,8 @@ const CanvasShapeModal = () => {
             key={shape.id}
             defaultPosition={{ x: 0, y: 0 }}
             // position={{ x: shape.x, y: shape.y }}
-            onStart={() => handleDragStart(index)}
-            onStop={(e, data) => handleDrag(index, e, data)}
+            // onStart={() => handleDragStart(index)}
+            // onStop={(e, data) => handleDrag(index, e, data)}
           >
             <Resizable
               width={fixedShapeSize}

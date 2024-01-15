@@ -145,6 +145,9 @@ function CanvasV2({ width, height }) {
     setOffset(selectedCanvas.offset);
   }, [selectedCanvas]);
 
+  // new code
+  const [elements, setElements] = React.useState([]);
+  console.log({elements})
   // ------------------------------------------------------------------------------
   // render
   // ------------------------------------------------------------------------------
@@ -179,46 +182,103 @@ function CanvasV2({ width, height }) {
         }}
         className="origin-center  absolute "
       >
-        {/* main content */}
-        <div
-        id='canvas-card'
-          style={{
-            top: '0px',
-            left: '0px',
-            width: selectedCanvas?.width,
-            height: selectedCanvas?.height
-          }}
-          className="bg-white absolute text-green-50"
-        >
-          {/* render all element */}
-          {selectedCanvas?.elements.map((element) => {
-            if (element.type == canvasElementType.text) {
-              return <CanvasText key={element.id} element={element} />;
-            } else if (element.type == canvasElementType.circle) {
-              return <CanvasCircle key={element.id} element={element} />;
-            } 
-            else if (element.type == canvasElementType.line) {
-              return <Line key={element.id} element={element} />;
-            }
-            else if (element.type == canvasElementType.square) {
-              return<Square key={element.id} element={element} />;
-            }
-            else if (element.type == canvasElementType.triangle) {
-              return <Triangle key={element.id} element={element} />;
-            }
-            else if (element.type == canvasElementType.pentagon) {
-              < Pentagon key={element.id} element={element} />;
-            }
-          })}
-          {/* circle */}
-          {/* <div
+        <div className="relative inset-0">
+          {/* main content */}
+          <div
+            id='canvas-card'
             style={{
-              top: 200 + 'px',
-              left: 100 + 'px'
+              top: '0px',
+              left: '0px',
+              width: selectedCanvas?.width,
+              height: selectedCanvas?.height
             }}
-            className="w-[100px] h-[100px] bg-green-500 rounded-full absolute "
-          ></div> */}
-          {/* <CanvasText width={500} height={300} top={50} left={100} /> */}
+            className="bg-white absolute text-green-50"
+            onDrop={(e) => {
+              console.dir(e.dataTransfer.getData('shape'));
+              setElements((elems) => [...elems, JSON.parse(e.dataTransfer.getData('shape'))]);
+            }}
+            onDragOver={(e) => e.preventDefault()}
+          >
+            {/* render all element */}
+            {selectedCanvas?.elements.map((element) => {
+              if (element.type == canvasElementType.text) {
+                return <CanvasText key={element.id} element={element} />;
+              } else if (element.type == canvasElementType.circle) {
+                return <CanvasCircle key={element.id} element={element} />;
+              } 
+              else if (element.type == canvasElementType.line) {
+                return <Line key={element.id} element={element} />;
+              }
+              else if (element.type == canvasElementType.square) {
+                return<Square key={element.id} element={element} />;
+              }
+              else if (element.type == canvasElementType.triangle) {
+                return <Triangle key={element.id} element={element} />;
+              }
+              else if (element.type == canvasElementType.pentagon) {
+                < Pentagon key={element.id} element={element} />;
+              }
+            })}
+            {/* circle */}
+            {
+              elements.map((element, idx) => {
+                if (element.type.toLowerCase() === 'square') {
+                  return (
+                    <div
+                      key={idx}
+                      // className='absolute top-0 right-0 bottom-0 left-0 '
+                      style={{
+                        backgroundColor: ' #9ca3af',
+                        width: '250px',
+                        height: '250px',
+                      }}
+                    ></div>
+                  );
+                }
+                else if (element.type.toLowerCase() === 'triangle') {
+                  return (
+                    <div
+                      key={idx}
+                      className=' flex justify-center items-baseline'
+                      style={{
+                        width: '0',
+                        height: '0',
+                        borderBottom: `${element.size}px solid #9ca3af`, // Set all three borders
+                        borderTop: '0', // Remove the bottom border
+                        borderLeft: `${element.size / 2}px solid transparent`, // Set the left border
+                        borderRight: `${element.size / 2}px solid transparent`,
+                      }}
+                    />
+                  );
+                }
+                else if (element.type.toLowerCase() === 'pentagon') {
+                  return (
+                    <div
+                      className='bg-gray-400'
+                      style={{
+                        clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)',
+                        width: '100%',
+                        height: '100%',
+                      }}
+                    ></div>
+                  );
+                }
+                else if (element.type.toLowerCase() === 'line') {
+                  return (
+                    <div className='w-full h-[5px] bg-gray-400'></div>
+                  );
+                }
+              })
+            }
+            {/* <div
+              style={{
+                top: 200 + 'px',
+                left: 100 + 'px'
+              }}
+              className="w-[100px] h-[100px] bg-green-500 rounded-full absolute "
+            ></div> */}
+            {/* <CanvasText width={500} height={300} top={50} left={100} /> */}
+          </div>
         </div>
       </div>
     </div>

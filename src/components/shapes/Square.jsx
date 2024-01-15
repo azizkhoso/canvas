@@ -26,6 +26,8 @@ function Square({ element }) {
           width: `${element.size}px`,
           height: `${element.size}px`,
         }}
+        draggable="true"
+        onDragStart={(e) => e.dataTransfer.setData('shape', JSON.stringify(element))}
       >
         <div
           className='absolute top-0 right-0 bottom-0 left-0 '

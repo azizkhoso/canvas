@@ -30,6 +30,8 @@ function Triangle({ element }) {
           borderLeft: `${element.size / 2}px solid transparent`, // Set the left border
           borderRight: `${element.size / 2}px solid transparent`,
         }}
+        draggable="true"
+        onDragStart={(e) => e.dataTransfer.setData('shape', JSON.stringify(element))}
       />
     </CanvasElementContainer>
   );

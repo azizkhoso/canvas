@@ -26,6 +26,8 @@ function Line({ element }) {
           width: element.size || '50%',
           height: element.size || '10px',
         }}
+        draggable="true"
+        onDragStart={(e) => e.dataTransfer.setData('shape', JSON.stringify(element))}
       >
         <div className='w-full h-[5px] bg-gray-400'></div>
       </div>

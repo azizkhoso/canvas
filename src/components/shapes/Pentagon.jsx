@@ -26,6 +26,8 @@ function Pentagon({ element }) {
           width: `${element.size}px`,
           height: `${element.size}px`,
         }}
+        draggable="true"
+        onDragStart={(e) => e.dataTransfer.setData('shape', JSON.stringify(element))}
       >
         <div
           className='bg-gray-400'

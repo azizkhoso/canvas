@@ -322,9 +322,9 @@ function CanvasElementContainer({ children, element }) {
   return (
     <ClickAwayListener onClickAway={handleElementClickAway}>
       <div
-        onMouseMove={(e) => handleMouseMove(e)}
+        // onMouseMove={(e) => handleMouseMove(e)}
         style={{ top: elementTop + 'px', left: elementLeft + 'px' }}
-        className="absolute"
+        // className="absolute"
       >
         <div className="w-full h-full absolute top-0 left-0">{children}</div>
         <div
